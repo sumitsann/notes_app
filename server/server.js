@@ -6,6 +6,7 @@ if (process.env.NODE_ENV !== "production") {
 // Import Dependencies
 const express = require("express");
 const connectToDb = require("./config/connectToDb");
+const notesController = require("./controllers/notesController");
 
 // Create an express app
 
@@ -24,14 +25,11 @@ app.get("/", (req, res) => {
   res.send("Hello world!");
 });
 
-app.post("/notes", (req, res) => {
-  // Get the sent in data off request body
-  const title = req.body.title;
-  const body = req.body.body;
-
-  // Create a note with it
-  // Response with the new note
-});
+app.get("/notes", notesController.fetchNotes);
+app.get("/notes/:id", notesController.fetchNote);
+app.post("/notes", notesController.createNote);
+app.put("/notes/:id", notesController.updateNote);
+app.delete("/notes/:id", notesController.deleteNote);
 
 // Start the server
 app.listen(port, () => {
